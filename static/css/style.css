@@ -1,0 +1,26 @@
+body {
+    font-family: Helvetica, Arial, serif;
+}
+
+#columns {
+    column-width: 320px;
+}
+
+div#columns figure {
+    display: inline-block;
+}
+
+@media screen and (max-width: 750px) {
+    #columns {
+        column-gap: 0px;
+    }
+
+    #columns figure {
+        width: 100%;
+    }
+}
+
+p.old {
+    color: #555;
+    font-size: xx-small;
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Микротвиттер</title>
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+</head>
+<body>
+
+{% for author, tweets in tweets.items() %}
+    <h3><a href="https://twitter.com/{{ author }}">@{{ author }}</a></h3>
+    <div id="columns">
+        {% for tweet in tweets %}
+            <figure id="{{ author }}">
+                <p {% if tweet in tweets_prev %}class="old"{% endif %}>{{ tweet }}</p>
+            </figure>
+        {% endfor %}
+    </div>
+{% endfor %}
+
+
+</body>
+</html>
