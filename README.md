@@ -8,6 +8,7 @@ It's really **mikro**-client:
 - No tweets with pictures/videos
 - No tweets with links anywhere else
 - No tweets you've already read
+- No javascript
 
 All you need is:
 
