@@ -14,7 +14,7 @@ class MikroTwitterView(FlaskView):
 
     def __init__(self):
         self.tweets_prev = set()
-        self.authors = [a.replace('@', '') for a in open('./config').read().split() if not a.startswith("#")]
+        self.authors = [a.replace('@', '') for a in open('./config').read().split('\n') if a and not a.startswith("#")]
 
     def _no_shit(self, t):
         return 'pic' not in t.text and 'http' not in t.text and t.text.capitalize() not in self.tweets_prev
