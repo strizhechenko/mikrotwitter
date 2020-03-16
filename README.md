@@ -13,6 +13,6 @@ It's really **mikro**-client:
 All you need is:
 
 1. Clone repo: `git clone https://github.com/strizhechenko/mikrotwitter`
-2. Fill plaintext file `./config` with user names of people who you want to read.
-3. Install dependencies: `cd mikrotwitter; pip install -r requirements.txt`
+2. Install dependencies: `cd mikrotwitter; pip install -r requirements.txt`
+3. Fill plaintext file `./config` with user names of people who you want to read.
 4. Run app: `python3 -m flask run`
