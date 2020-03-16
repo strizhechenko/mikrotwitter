@@ -9,6 +9,7 @@ It's really **mikro**-client:
 - No tweets with links anywhere else
 - No tweets you've already read
 - No javascript
+- No autotests
 - ≈90 LoC
 
 All you need is:
