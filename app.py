@@ -15,17 +15,35 @@ class MikroTwitterView(FlaskView):
     def __init__(self):
         self.tweets_prev = set()
         self.authors = [a.replace('@', '') for a in open('./config').read().split('\n') if a and not a.startswith("#")]
+        self.cur_author = None
 
     def _no_shit(self, t):
-        return 'pic' not in t.text and 'http' not in t.text and t.text.capitalize() not in self.tweets_prev
+        for patter in 'pic', 'http', '.com/', '.ru/', '.org', 'ift.tt':
+            if patter in t.text:
+                return False
+        if 'retweeted' in t.parent.parent.parent.text:
+            return False
+        if 'Replying to' in t.parent.text:
+            if len(t.parent.find_all('a')) > 1:
+                return False
+            if t.parent.find('a').text != '@' + self.cur_author:
+                return False
+        return t.text.capitalize() not in self.tweets_prev
+
+    def reset(self):
+        self.tweets_prev.clear()
+        return self.index()
 
     def _fetch(self, author):
-        req = get(f"https://twitter.com/{author}")
+        url = "https://mobile.twitter.com/{0}".format(author)
+        req = get(url)
         if req.status_code != 200:
-            print(req.status_code, req.content)
-        soup = BeautifulSoup(req.content, "lxml")
+            print(url, req.status_code, req.content)
+        print(url, req.status_code)
+        soup = BeautifulSoup(req.content, "html.parser")
+        self.cur_author = author
         return [t.text.capitalize() for t in
-                filter(self._no_shit, soup.find_all('p', attrs={'class': 'TweetTextSize'}))]
+                filter(self._no_shit, soup.find_all('div', attrs={'class': 'tweet-text'}))]
 
     def index(self):
         tweets = {author: self._fetch(author) for author in self.authors}
