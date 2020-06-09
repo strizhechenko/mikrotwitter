@@ -5,15 +5,17 @@ from flask import Flask, render_template
 from functools import reduce
 from operator import add
 from flask_classful import FlaskView
+import logging
 
 app = Flask(__name__)
 
 
 class MikroTwitterView(FlaskView):
     route_base = '/'
+    tweets_prev = set()
 
     def __init__(self):
-        self.tweets_prev = set()
+
         self.authors = [a.replace('@', '') for a in open('./config').read().split('\n') if a and not a.startswith("#")]
         self.cur_author = None
 
@@ -31,6 +33,7 @@ class MikroTwitterView(FlaskView):
         return t.text.capitalize() not in self.tweets_prev
 
     def reset(self):
+        logging.warning("cleanup!")
         self.tweets_prev.clear()
         return self.index()
 
@@ -45,10 +48,17 @@ class MikroTwitterView(FlaskView):
         return [t.text.capitalize() for t in
                 filter(self._no_shit, soup.find_all('div', attrs={'class': 'tweet-text'}))]
 
+    def post(self):
+        tweets = {author: self._fetch(author) for author in self.authors}
+        logging.warning("post1: marked as read: %d", len(self.tweets_prev))
+        self.tweets_prev |= set(reduce(add, tweets.values()))
+        logging.warning("post2: marked as read: %d", len(self.tweets_prev))
+        return self.index()
+
     def index(self):
+        logging.warning("marked as read: %d", len(self.tweets_prev))
         tweets = {author: self._fetch(author) for author in self.authors}
         page = render_template("index.html", tweets=tweets, tweets_prev=self.tweets_prev)
-        self.tweets_prev |= set(reduce(add, tweets.values()))
         return page
 
 

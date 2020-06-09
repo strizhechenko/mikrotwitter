@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="/static/css/style.css" type="text/css">
 </head>
 <body>
-
+    <form method="post" action="/">
+        <button type="submit">Прочитал</button>
+    </form>
+    <form method="get" action="/">
+        <button type="submit">Обновить</button>
+    </form>
 {% for author, tweets in tweets.items() %}
     <h3><a href="https://twitter.com/{{ author }}">@{{ author }}</a></h3>
     <div id="columns">
@@ -18,7 +23,5 @@
         {% endfor %}
     </div>
 {% endfor %}
-
-
 </body>
 </html>
