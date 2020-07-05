@@ -12,11 +12,11 @@ div#columns figure {
 
 @media screen and (max-width: 750px) {
     #columns {
-        column-gap: 0px;
+        column-gap: 0;
     }
 
     #columns figure {
-        width: 100%;
+        width: 80%;
     }
 }
 

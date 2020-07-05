@@ -10,7 +10,7 @@ It's really **mikro**-client:
 - No tweets you've already read
 - No javascript
 - No autotests
-- ≈90 LoC
+- 126 LoC for CSS, HTML Template and Python app
 
 All you need is:
 

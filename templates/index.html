@@ -10,13 +10,10 @@
     <form method="post" action="/">
         <button type="submit">Прочитал</button>
     </form>
-    <form method="get" action="/">
-        <button type="submit">Обновить</button>
-    </form>
 {% for author, tweets in tweets.items() %}
     <h3><a href="https://twitter.com/{{ author }}">@{{ author }}</a></h3>
     <div id="columns">
-        {% for tweet in tweets %}
+        {% for tweet in tweets | reverse %}
             <figure id="{{ author }}">
                 <p {% if tweet in tweets_prev %}class="old"{% endif %}>{{ tweet }}</p>
             </figure>
